@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import Head from "next/head";
+import Link from "next/link";
 
 function User({users}) {
     return (
@@ -10,34 +11,44 @@ function User({users}) {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
 
-            <h1>Users</h1>
-            <table className="table">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Full Name</th>
-                    <th scope="col">username</th>
-                    <th scope="col">Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                {users.map((user) => (
+            <div className="container">
+                <h1>Users</h1>
+                <table className="table table-hover ">
+                    <thead>
                     <tr>
-                        <td>{user.id}</td>
-                        <td>{user.name}</td>
-                        <td>{user.username}</td>
-                        <td>{user.email}</td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">username</th>
+                        <th scope="col">Email</th>
+                        <th></th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {users.map((user) => (
+                        <tr key={user.id}>
+                            <td>{user.id}</td>
+                            <td>{user.name}</td>
+                            <td>{user.username}</td>
+                            <td>{user.email}</td>
+                            <td>
+                                <Link href={`/user/${user.id}`}>
+                                    <a>
+                                        View
+                                    </a>
+                                </Link>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }
 
 // This function gets called at build time
 export async function getStaticProps() {
-    // Call an external API endpoint to get posts
+    // Call an external API endpoint to get users
     const res = await fetch('https://jsonplaceholder.typicode.com/users')
     const users = await res.json()
 
