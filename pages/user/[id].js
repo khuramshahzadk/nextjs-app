@@ -1,4 +1,9 @@
+import {useRouter} from "next/router";
+
 const Details = ({user}) => {
+    const router = useRouter();
+    const {id} = router.query
+
     return (
         <div>
             <div className="container my-5 py-5 bg-light">
